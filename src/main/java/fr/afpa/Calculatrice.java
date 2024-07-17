@@ -1,29 +1,21 @@
 package fr.afpa;
 
 import javafx.application.Application;
-import javafx.application.Platform;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
-import javafx.scene.input.Clipboard;
-import javafx.scene.input.ClipboardContent;
 
 public class Calculatrice extends Application {
 
     /*
      * TP Calculatrice.
      */
-
+    
     /*
      * currentSum = Initialise le résultat à 0.
      * userFieldAdd = Stock les entrées utilisateurs.
@@ -83,6 +75,8 @@ public class Calculatrice extends Application {
         scrollPane.setFitToWidth(true);
         scrollPane.setMaxWidth(250);
         scrollPane.setMaxHeight(100);
+
+        // Avec EventHandler
 
         button0.setOnAction(value -> {
             inputField.setText(inputField.getText() + "0 +");
