@@ -26,7 +26,7 @@ public class Calculatrice extends Application {
 
     /*
      * currentSum = Initialise le résultat à 0.
-     * userFieldAdd = Strock les entrées utilisateurs.
+     * userFieldAdd = Stock les entrées utilisateurs.
      */
     private int currentSum = 0;
     private String userFieldAdd = "";
