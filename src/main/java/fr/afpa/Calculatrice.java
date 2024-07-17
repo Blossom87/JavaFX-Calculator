@@ -1,6 +1,8 @@
 package fr.afpa;
 
 import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -15,13 +17,16 @@ public class Calculatrice extends Application {
     /*
      * TP Calculatrice.
      */
-    
-    /*
-     * currentSum = Initialise le résultat à 0.
-     * userFieldAdd = Stock les entrées utilisateurs.
+
+    /**
+     * "Flag" permettant d'indiquer s'il s'agit du premier chiffre
      */
-    private int currentSum = 0;
-    private String userFieldAdd = "";
+    private boolean isFirstNumber = true;
+
+    /**
+     * Contient le résultat de la somme
+     */
+    private int result = 0;
 
     public static void main(String[] args) {
 
@@ -68,93 +73,137 @@ public class Calculatrice extends Application {
         scrollPane.setContent(inputField);
 
         calculator.add(inputField, 0, 0, 1, 1);
-        calculator.add(buttonsRow1, 0, 1, 1, 2);
-        calculator.add(buttonsRow2, 0, 3, 1, 1);
-        calculator.add(functionButtons, 0, 4, 1, 1);
+        calculator.add(buttonsRow1, 0, 1, 1, 1);
+        calculator.add(buttonsRow2, 0, 2, 1, 1);
+        calculator.add(functionButtons, 0, 3, 1, 1);
 
         scrollPane.setFitToWidth(true);
         scrollPane.setMaxWidth(250);
         scrollPane.setMaxHeight(100);
 
         // Avec EventHandler
-
-        button0.setOnAction(value -> {
-            inputField.setText(inputField.getText() + "0 +");
+        button0.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                if (isFirstNumber) {
+                    inputField.setText(inputField.getText() + "0");
+                    isFirstNumber = false;
+                } else {
+                    inputField.setText(inputField.getText() + " + 0");
+                }
+            }
         });
 
         button1.setOnAction(value -> {
-            inputField.setText(inputField.getText() + "1 +");
+            if (isFirstNumber) {
+                inputField.setText(inputField.getText() + "1");
+                isFirstNumber = false;
+            } else {
+                inputField.setText(inputField.getText() + " + 1");
+            }
+
+            // A chaque fois que l'utilisateur clique sur un bouton -> ajouter un chiffre
+            // dans une variable
+            result = result + 1;
         });
 
         button2.setOnAction(value -> {
-            inputField.setText(inputField.getText() + "2 +");
+            if (isFirstNumber) {
+                inputField.setText(inputField.getText() + "2");
+                isFirstNumber = false;
+            } else {
+                inputField.setText(inputField.getText() + " + 2");
+            }
+
+            result = result + 2;
         });
 
         button3.setOnAction(value -> {
-            inputField.setText(inputField.getText() + "3 +");
+            if (isFirstNumber) {
+                inputField.setText(inputField.getText() + "3");
+                isFirstNumber = false;
+            } else {
+                inputField.setText(inputField.getText() + " + 3");
+            }
+            result = result + 3;
         });
 
         button4.setOnAction(value -> {
-            inputField.setText(inputField.getText() + "4 +");
+            if (isFirstNumber) {
+                inputField.setText(inputField.getText() + "4");
+                isFirstNumber = false;
+            } else {
+                inputField.setText(inputField.getText() + " + 4");
+            }
+
+            result = result + 4;
         });
 
         button5.setOnAction(value -> {
-            inputField.setText(inputField.getText() + "5 +");
+            if (isFirstNumber) {
+                inputField.setText(inputField.getText() + "5");
+                isFirstNumber = false;
+            } else {
+                inputField.setText(inputField.getText() + " + 5");
+            }
+
+            result = result + 5;
         });
 
         button6.setOnAction(value -> {
-            inputField.setText(inputField.getText() + "6 +");
+            if (isFirstNumber) {
+                inputField.setText(inputField.getText() + "6");
+                isFirstNumber = false;
+            } else {
+                inputField.setText(inputField.getText() + " + 6");
+            }
+
+            result = result + 6;
         });
 
         button7.setOnAction(value -> {
-            inputField.setText(inputField.getText() + "7 +");
+            if (isFirstNumber) {
+                inputField.setText(inputField.getText() + "7");
+                isFirstNumber = false;
+            } else {
+                inputField.setText(inputField.getText() + " + 7");
+            }
+
+            result = result + 7;
         });
 
         button8.setOnAction(value -> {
-            inputField.setText(inputField.getText() + "8 +");
+            if (isFirstNumber) {
+                inputField.setText(inputField.getText() + "8");
+                isFirstNumber = false;
+            } else {
+                inputField.setText(inputField.getText() + " + 8");
+            }
+            result = result + 8;
         });
 
         button9.setOnAction(value -> {
-            inputField.setText(inputField.getText() + "9 +");
+            if (isFirstNumber) {
+                inputField.setText(inputField.getText() + "9");
+                isFirstNumber = false;
+            } else {
+                inputField.setText(inputField.getText() + " + 9");
+            }
+            result = result + 9;
         });
 
-        buttonCalculate.setOnAction(value -> {
-            String inputValue = inputField.getText();
-
-            if (inputValue.isEmpty()) {
-                inputField.setText("Please press some buttons.");
-                return;
+        buttonCalculate.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                // Objectif : afficher la somme dans la zone de texte
+                inputField.appendText(" = " + result + " ");
             }
-
-            int lastEqualIndex = inputValue.lastIndexOf('=');
-            if (lastEqualIndex != -1) {
-                inputValue = inputValue.substring(lastEqualIndex + 1).trim();
-            }
-
-            if (inputValue.endsWith("+")) {
-                inputValue = inputValue.substring(0, inputValue.length() - 1);
-            }
-
-            String[] stringTotal = inputValue.split("\\+");
-            int sum = 0;
-            for (String str : stringTotal) {
-                try {
-                    sum += Integer.parseInt(str.trim());
-                } catch (NumberFormatException e) {
-                    inputField.setText("Error");
-                    return;
-                }
-            }
-
-            userFieldAdd += inputValue + "+";
-            currentSum = sum;
-            inputField.setText(userFieldAdd + "= " + currentSum + " +");
         });
 
         buttonClear.setOnAction(value -> {
             inputField.clear();
-            userFieldAdd = "";
-            currentSum = 0;
+            result = 0;
+            isFirstNumber = true;
         });
 
         // ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
